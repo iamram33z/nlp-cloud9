@@ -1,0 +1,65 @@
+name: Python Action Workflow for NLP Cloud9 Project
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the repository
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Python environment
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.8
+
+    # Step 3: Install dependencies
+    - name: Install Dependencies
+      run: |
+        python -m venv .venv
+        source .venv/bin/activate
+        pip install --upgrade pip
+        pip install -r requirements.txt
+      env:
+        INDIGO: "\033[34m"
+        GREEN: "\033[32m"
+        RESET: "\033[0m"
+
+    # Step 4: Run linting using pylint
+    - name: Lint Code with Pylint
+      run: |
+        echo -e "${INDIGO}Running Pylint...${RESET}"
+        .venv/bin/pylint app nlplogic test
+        echo -e "${GREEN}Linting Completed.${RESET}\n"
+
+    # Step 5: Format code using Black
+    - name: Format Code with Black
+      run: |
+        echo -e "${INDIGO}Running Black...${RESET}"
+        .venv/bin/black app nlplogic test
+        echo -e "${GREEN}Formatting Completed.${RESET}\n"
+
+    # Step 6: Run tests with pytest
+    - name: Run Tests with Pytest
+      run: |
+        echo -e "${INDIGO}Running Tests...${RESET}"
+        .venv/bin/pytest test --cov=app --cov=nlplogic
+        echo -e "${GREEN}Tests Completed.${RESET}\n"
+
+    # Step 7: Cleanup (optional)
+    - name: Cleanup
+      run: |
+        echo -e "${INDIGO}Cleaning Up...${RESET}"
+        rm -rf .venv
+        find . -type d -name "__pycache__" -exec rm -rf {} +
+        echo -e "${GREEN}Cleanup Completed.${RESET}\n"
