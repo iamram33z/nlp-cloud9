@@ -27,6 +27,7 @@ install:
 	$(PYTHON) -m venv $(VENV_DIR)
 	$(VENV_DIR)/bin/$(PIP) install --upgrade pip
 	$(VENV_DIR)/bin/$(PIP) install -r requirements.txt
+	$(VENV_DIR)/bin/$(PYTHON) -m textblob.download_corpora
 	@echo "$(GREEN)Dependencies Installed.$(RESET)\n"
 
 # Run linting using pylint
