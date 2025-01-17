@@ -2,6 +2,7 @@ ipython
 textblob
 pylint
 pytest
+pytest-cov
 wikipedia
 black
 pyarrow
@@ -12,3 +13,4 @@ boto
 mypy-boto3-s3
 transformers[sentencepiece]
 datasets
+pylance
