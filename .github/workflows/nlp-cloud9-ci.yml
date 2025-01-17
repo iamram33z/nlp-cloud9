@@ -10,18 +10,18 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
     # Step 1: Checkout the repository
     - name: Checkout Code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     # Step 2: Set up Python environment
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: 3.8
+        python-version: 3.12
 
     # Step 3: Install dependencies
     - name: Install Dependencies
@@ -30,6 +30,7 @@ jobs:
         source .venv/bin/activate
         pip install --upgrade pip
         pip install -r requirements.txt
+        python -m textblob.download_corpora
       env:
         INDIGO: "\033[34m"
         GREEN: "\033[32m"
