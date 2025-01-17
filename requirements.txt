@@ -1,0 +1,14 @@
+ipython
+textblob
+pylint
+pytest
+wikipedia
+black
+pyarrow
+jupyter
+jupyterlab
+torch
+boto
+mypy-boto3-s3
+transformers[sentencepiece]
+datasets
